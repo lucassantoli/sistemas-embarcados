@@ -16,7 +16,7 @@ const byte ccw_motor     = 0B00011000;
 const byte infrared_pin  = 0B10000000;
 
 
-///////////////////////////////////////////////
+////////////////////////////////////////////////
 
 volatile unsigned long timer1_millis;  // faixa de valores vai de 0 a 4.294.967.295 (2^32 - 1)
 
@@ -24,7 +24,7 @@ ISR(TIMER1_COMPA_vect){
   timer1_millis++;
 }
 
-///////////////////////////////////////////////
+////////////////////////////////////////////////
 
 void inicia_millis(unsigned long f_cpu){
   unsigned long ctc_match_overflow;
@@ -37,7 +37,7 @@ void inicia_millis(unsigned long f_cpu){
   sei();
 }
 
-///////////////////////////////////////////////
+////////////////////////////////////////////////
 
 unsigned long nossamillis () {
   unsigned long millis_return;
@@ -56,7 +56,7 @@ void trigger_sensor(byte port) {
   PORTB &= ~(port); // port LOW
 }
 
-///////////////////////////////////////////////
+////////////////////////////////////////////////
 
 float detect_echo(byte port) {
   unsigned long timer_ultrasonic = 0;
@@ -73,7 +73,7 @@ float detect_echo(byte port) {
   return distance;
 }
 
-///////////////////////////////////////////////
+////////////////////////////////////////////////
 
 void girar() {
   Serial.println("Girandoooo");
@@ -89,7 +89,7 @@ void andar() {
   //PORTD = 0B00101000;
 }
 
-///////////////////////////////////////////////
+////////////////////////////////////////////////
 
 int main(void) {
 

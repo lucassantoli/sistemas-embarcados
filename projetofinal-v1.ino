@@ -88,6 +88,7 @@ void andar() {
   Serial.println("Indo frente");
   PORTD |=  (fwd_motor);
   PORTD &= ~(rev_motor);
+  Serial.println(PORTD, BIN);
   //PORTD = 0B00101000;
 }
 

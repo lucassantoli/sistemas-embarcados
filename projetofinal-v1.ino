@@ -9,14 +9,16 @@ const byte echo_pin      = 0B00010000;
 
 //PORTB
 const byte stop_motor    = 0B00111100;
+const byte motor_pins    = 0B00111100;
 const byte fwd_motor     = 0B00101000;
 const byte rev_motor     = 0B00010100;
 const byte cw_motor      = 0B00100100;
 const byte ccw_motor     = 0B00011000;
+
 const byte infrared_pin  = 0B10000000;
 
 
-////////////////////////////////////////////////
+///////////////////////////////////////////////
 
 volatile unsigned long timer1_millis;  // faixa de valores vai de 0 a 4.294.967.295 (2^32 - 1)
 
@@ -24,20 +26,20 @@ ISR(TIMER1_COMPA_vect){
   timer1_millis++;
 }
 
-////////////////////////////////////////////////
+///////////////////////////////////////////////
 
 void inicia_millis(unsigned long f_cpu){
   unsigned long ctc_match_overflow;
   ctc_match_overflow = ((f_cpu / 1000) / 8); // overflow do timer em 1ms
   TCCR1B |= (1 << WGM12) | (1 << CS11);
-  OCR1AH = (ctc_match_overflow >> 8);
-  OCR1AL = ctc_match_overflow;
+  OCR1AH  = (ctc_match_overflow >> 8);
+  OCR1AL  = ctc_match_overflow;
   TIMSK1 |= (1 << OCIE1A);
 
   sei();
 }
 
-////////////////////////////////////////////////
+///////////////////////////////////////////////
 
 unsigned long nossamillis () {
   unsigned long millis_return;
@@ -56,7 +58,7 @@ void trigger_sensor(byte port) {
   PORTB &= ~(port); // port LOW
 }
 
-////////////////////////////////////////////////
+///////////////////////////////////////////////
 
 float detect_echo(byte port) {
   unsigned long timer_ultrasonic = 0;
@@ -73,7 +75,7 @@ float detect_echo(byte port) {
   return distance;
 }
 
-////////////////////////////////////////////////
+///////////////////////////////////////////////
 
 void girar() {
   Serial.println("Girandoooo");
@@ -89,7 +91,7 @@ void andar() {
   //PORTD = 0B00101000;
 }
 
-////////////////////////////////////////////////
+///////////////////////////////////////////////
 
 int main(void) {
 
@@ -110,7 +112,7 @@ int main(void) {
   DDRB &= ~(echo_pin);    // pin 12 input
 
   DDRD |=  (motor_pins);  // pin 2 3 4 5 output
-  DDRD &= ~(data_ir_pin); // pin 7 input
+  DDRD &= ~(infrared_pin); // pin 7 input
 
 
   while (1) {
